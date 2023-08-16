@@ -16,7 +16,7 @@ const dbConnect = async () => {
     await client.connect();
     console.log("Database is connected");
   } catch (err) {
-    res.send({
+    res.status(400).json({
       success: false,
       error: err.message,
     })
