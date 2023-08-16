@@ -4,6 +4,10 @@ const cors = require('cors');
 require('dotenv').config();
 const morgan = require('morgan');
 const { dbConnect } = require('./mongodb/mongodb.config');
+const customerRoutes = require('./routes/customerRoutes');
+const supplierRoutes = require('./routes/supplierRoutes');
+const productsRoutes = require('./routes/productRoutes');
+const bankRoutes = require('./routes/bankRoutes');
 const port = process.env.PORT || 5000;
 
 // middleware
@@ -13,6 +17,12 @@ app.use(morgan("dev"));
 
 // run mongodb
 dbConnect();
+
+// routes
+app.use('/customers', customerRoutes);
+app.use('/suppliers', supplierRoutes);
+app.use('/products', productsRoutes);
+app.use('/banks', bankRoutes);
 
 // default get route
 app.get("/", (req, res) => {
