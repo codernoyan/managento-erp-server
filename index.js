@@ -18,7 +18,7 @@ app.use(morgan("dev"));
 // run mongodb
 dbConnect();
 
-// routes
+// entry routes
 app.use('/customers', customerRoutes);
 app.use('/suppliers', supplierRoutes);
 app.use('/products', productsRoutes);
