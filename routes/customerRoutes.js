@@ -25,8 +25,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const customer = await Customer.findOne({ _id: id });  //.select({ _id: 0, __v: 0 })  //.limit(2)
-
+    const customer = await Customer.findOne({ _id: id });
     res.status(200).json({
       success: true,
       data: customer,
@@ -78,6 +77,21 @@ router.patch('/:id', async (req, res) => {
 });
 
 // delete a customer
-router.delete('/:id', async (req, res) => { });
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Customer.deleteOne({ _id: id });
+
+    res.status(200).json({
+      success: true,
+      message: "Customer is deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
 
 module.exports = router;
