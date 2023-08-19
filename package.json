@@ -1,5 +1,5 @@
 {
-  "name": "erp-solutions-server",
+  "name": "managento-erp-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Noyan Dey",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
