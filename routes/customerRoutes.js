@@ -7,7 +7,7 @@ const Customer = new mongoose.model("Customer", customerSchema);
 // get all customers
 router.get('/', async (req, res) => {
   try {
-    const customers = await Customer.find({});
+    const customers = await Customer.find({});  //.select({ _id: 0, __v: 0 })  //.limit(2)
 
     res.status(200).json({
       success: true,
@@ -22,7 +22,22 @@ router.get('/', async (req, res) => {
 });
 
 // get a single customer
-router.get('/:id', async (req, res) => { });
+router.get('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const customer = await Customer.findOne({ _id: id });  //.select({ _id: 0, __v: 0 })  //.limit(2)
+
+    res.status(200).json({
+      success: true,
+      data: customer,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
 
 // add a customer
 router.post('/', async (req, res) => {
