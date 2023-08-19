@@ -28,9 +28,25 @@ router.post('/', async (req, res) => {
   }
 });
 
-
 // edit a customer
-router.patch('/:id', async (req, res) => { });
+router.patch('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedDoc = req.body;
+    await Customer.findByIdAndUpdate({ _id: id }, {
+      $set: updatedDoc,
+    }, {});
+    res.status(200).json({
+      success: true,
+      message: 'Customer is updated successfully',
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
 
 // delete a customer
 router.delete('/:id', async (req, res) => { });

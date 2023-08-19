@@ -25,6 +25,7 @@ const customerSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-}, { versionKey: false });
+});
+// }, { versionKey: false });
 
 module.exports = customerSchema;
