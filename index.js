@@ -3,7 +3,6 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 const morgan = require('morgan');
-const { dbConnect } = require('./mongodb/mongodb.config');
 const customerRoutes = require('./routes/customerRoutes');
 const supplierRoutes = require('./routes/supplierRoutes');
 const productsRoutes = require('./routes/productRoutes');
@@ -19,15 +18,12 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// run mongodb
-dbConnect();
-
 // database connection with mongoose
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-  .then(() => console.log("Connection Successful"))
+  .then(() => console.log("Database Connection Successful"))
   .catch((err) => console.log(err.message));
 
 // entry routes
