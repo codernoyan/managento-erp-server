@@ -5,7 +5,21 @@ const customerSchema = require('../schemas/customerSchemas');
 const Customer = new mongoose.model("Customer", customerSchema);
 
 // get all customers
-router.get('/', async (req, res) => { });
+router.get('/', async (req, res) => {
+  try {
+    const customers = await Customer.find({});
+
+    res.status(200).json({
+      success: true,
+      data: customers,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
 
 // get a single customer
 router.get('/:id', async (req, res) => { });
