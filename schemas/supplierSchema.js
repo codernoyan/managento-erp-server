@@ -1,30 +1,26 @@
 const mongoose = require('mongoose');
 
-const bankSchema = mongoose.Schema({
-  bankAccountId: {
+const supplierSchema = mongoose.Schema({
+  supplierId: {
     type: String,
     required: true,
   },
-  bankName: {
+  supplierName: {
     type: String,
     required: true,
   },
-  branchName: {
+  supplierAddress: {
     type: String,
     required: true,
   },
-  accountName: {
+  status: {
     type: String,
-    required: true,
+    enum: ["active", "inactive"],
   },
-  accountNumber: {
-    type: Number,
-    required: true,
-  },
-  cratedAt: {
+  createdAt: {
     type: Date,
     default: Date.now,
   }
 });
 
-module.exports = bankSchema;
+module.exports = supplierSchema;

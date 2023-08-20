@@ -7,11 +7,11 @@ const Bank = new mongoose.model("Bank", bankSchema);
 // get all bank
 router.get("/", async (req, res) => {
   try {
-    const Bank = await Bank.find({});  //.select({ _id: 0, __v: 0 })  //.limit(2)
+    const bank = await Bank.find({});  //.select({ _id: 0, __v: 0 })  //.limit(2)
 
     res.status(200).json({
       success: true,
-      data: Bank,
+      data: bank,
     });
   } catch (err) {
     res.status(500).json({
