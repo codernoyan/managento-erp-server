@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bankSchema = mongoose.Schema({
-  bankAccountId: {
+  bankId: {
     type: String,
     required: true,
   },
