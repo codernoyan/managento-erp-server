@@ -4,6 +4,22 @@ const mongoose = require('mongoose');
 const supplierSchema = require('../schemas/supplierSchema');
 const Supplier = mongoose.model("Supplier", supplierSchema);
 
+// generate new unique id
+async function generateNewUniqueId() {
+  const maxCounterDocument = await Supplier.findOne(
+    { supplierId: { $regex: /^SPR\d+$/ } },
+    { supplierId: 1 },
+    { sort: { supplierId: -1 } }
+  ).lean();
+
+  if (maxCounterDocument) {
+    const currentCounter = parseInt(maxCounterDocument.supplierId.slice(3));
+    return `SPR${(currentCounter + 1).toString().padStart(4, '0')}`;
+  } else {
+    return 'SPR0001';
+  }
+}
+
 // get all supplier
 router.get("/", async (req, res) => {
   try {
@@ -39,9 +55,15 @@ router.get("/:id", async (req, res) => {
 });
 
 // add a supplier
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const newSupplier = new Supplier(req.body);
+    const newSupplierId = await generateNewUniqueId();
+
+    const newSupplier = new Supplier({
+      supplierId: newSupplierId,
+      ...req.body, // Assuming the request body contains customer data
+    });
+
     await newSupplier.save();
 
     res.status(200).json({
