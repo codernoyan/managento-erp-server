@@ -3,22 +3,22 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const supplierSchema = require('../schemas/supplierSchema');
 const Supplier = mongoose.model("Supplier", supplierSchema);
-
+const generateNewUniqueId = require('../lib/utils');
 // generate new unique id
-async function generateNewUniqueId() {
-  const maxCounterDocument = await Supplier.findOne(
-    { supplierId: { $regex: /^SPR\d+$/ } },
-    { supplierId: 1 },
-    { sort: { supplierId: -1 } }
-  ).lean();
+// async function generateNewUniqueId() {
+//   const maxCounterDocument = await Supplier.findOne(
+//     { supplierId: { $regex: /^SPR\d+$/ } },
+//     { supplierId: 1 },
+//     { sort: { supplierId: -1 } }
+//   ).lean();
 
-  if (maxCounterDocument) {
-    const currentCounter = parseInt(maxCounterDocument.supplierId.slice(3));
-    return `SPR${(currentCounter + 1).toString().padStart(4, '0')}`;
-  } else {
-    return 'SPR0001';
-  }
-}
+//   if (maxCounterDocument) {
+//     const currentCounter = parseInt(maxCounterDocument.supplierId.slice(3));
+//     return `SPR${(currentCounter + 1).toString().padStart(4, '0')}`;
+//   } else {
+//     return 'SPR0001';
+//   }
+// }
 
 // get all supplier
 router.get("/", async (req, res) => {
@@ -57,7 +57,7 @@ router.get("/:id", async (req, res) => {
 // add a supplier
 router.post('/', async (req, res) => {
   try {
-    const newSupplierId = await generateNewUniqueId();
+    const newSupplierId = await generateNewUniqueId(Supplier, "supplier", "SPR");
 
     const newSupplier = new Supplier({
       supplierId: newSupplierId,
