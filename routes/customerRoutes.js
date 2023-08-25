@@ -5,22 +5,6 @@ const customerSchema = require('../schemas/customerSchemas');
 const Customer = new mongoose.model("Customer", customerSchema);
 const generateNewUniqueId = require('../lib/utils');
 
-// // generate new unique id
-// async function generateNewUniqueId() {
-//   const maxCounterDocument = await Customer.findOne(
-//     { customerId: { $regex: /^CSR\d+$/ } },
-//     { customerId: 1 },
-//     { sort: { customerId: -1 } }
-//   ).lean();
-
-//   if (maxCounterDocument) {
-//     const currentCounter = parseInt(maxCounterDocument.customerId.slice(3));
-//     return `CSR${(currentCounter + 1).toString().padStart(4, '0')}`;
-//   } else {
-//     return 'CSR0001';
-//   }
-// }
-
 // get all customers
 router.get('/', async (req, res) => {
   try {

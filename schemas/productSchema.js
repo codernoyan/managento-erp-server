@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const productSchema = mongoose.Schema({
   productId: {
     type: String,
-    required: true,
   },
   productName: {
     type: String,
