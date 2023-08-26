@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
 // add a bank
 router.post('/', async (req, res) => {
   try {
-    const newBankId = await generateNewUniqueId(Bank, "bank", "BANK");
+    const newBankId = await generateNewUniqueId(Bank, "bank", "BNK");
 
     const newBank = new Bank({
       bankId: newBankId,
