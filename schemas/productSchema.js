@@ -17,7 +17,7 @@ const productSchema = mongoose.Schema({
   },
   quantityType: {
     type: String,
-    enum: ["pieces", "kilograms"],
+    enum: ["piece", "kilogram", "bag"],
   },
   productType: {
     type: String,

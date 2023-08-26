@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const productSchema = require('../schemas/productSchema');
 const Product = new mongoose.model("Product", productSchema);
+const generateNewUniqueId = require('../lib/utils');
 
 // get all product
 router.get("/", async (req, res) => {
@@ -39,9 +40,31 @@ router.get("/:id", async (req, res) => {
 });
 
 // add a product
-router.post("/", async (req, res) => {
+// router.post("/", async (req, res) => {
+//   try {
+//     const newProduct = new Product(req.body);
+//     await newProduct.save();
+
+//     res.status(200).json({
+//       success: true,
+//       message: 'Product is added successfully',
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       error: err.message,
+//     });
+//   }
+// });
+router.post('/', async (req, res) => {
   try {
-    const newProduct = new Product(req.body);
+    const newProductId = await generateNewUniqueId(Product, "product", "PR");
+
+    const newProduct = new Product({
+      productId: newProductId,
+      ...req.body, // Assuming your request body contains product data
+    });
+
     await newProduct.save();
 
     res.status(200).json({
@@ -55,7 +78,6 @@ router.post("/", async (req, res) => {
     });
   }
 });
-
 // edit a product
 router.patch("/:id", async (req, res) => {
   try {
