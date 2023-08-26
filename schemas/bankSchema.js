@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bankSchema = mongoose.Schema({
   bankId: {
     type: String,
-    required: true,
   },
   bankName: {
     type: String,

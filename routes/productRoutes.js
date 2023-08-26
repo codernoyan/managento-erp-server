@@ -40,22 +40,6 @@ router.get("/:id", async (req, res) => {
 });
 
 // add a product
-// router.post("/", async (req, res) => {
-//   try {
-//     const newProduct = new Product(req.body);
-//     await newProduct.save();
-
-//     res.status(200).json({
-//       success: true,
-//       message: 'Product is added successfully',
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       success: false,
-//       error: err.message,
-//     });
-//   }
-// });
 router.post('/', async (req, res) => {
   try {
     const newProductId = await generateNewUniqueId(Product, "product", "PR");

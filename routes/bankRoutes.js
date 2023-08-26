@@ -3,6 +3,7 @@ const bankSchema = require('../schemas/bankSchema');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Bank = new mongoose.model("Bank", bankSchema);
+const generateNewUniqueId = require('../lib/utils');
 
 // get all bank
 router.get("/", async (req, res) => {
@@ -39,9 +40,15 @@ router.get("/:id", async (req, res) => {
 });
 
 // add a bank
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const newBank = new Bank(req.body);
+    const newBankId = await generateNewUniqueId(Bank, "bank", "BANK");
+
+    const newBank = new Bank({
+      bankId: newBankId,
+      ...req.body, // Assuming your request body contains bank data
+    });
+
     await newBank.save();
 
     res.status(200).json({
@@ -55,7 +62,6 @@ router.post("/", async (req, res) => {
     });
   }
 });
-
 // edit a bank
 router.patch("/:id", async (req, res) => {
   try {
